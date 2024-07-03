@@ -11,7 +11,7 @@ namespace Character
         {
             if(other.GetComponent<ICopyable>()?.CanBeCopied() ?? false)
             {
-                if(Keyboard.current.eKey.isPressed)
+                if(Keyboard.current.eKey.wasPressedThisFrame)
                     other.GetComponent<ICopyable>().SaveObject();
             }
         }

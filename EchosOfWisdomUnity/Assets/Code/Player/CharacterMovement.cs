@@ -12,6 +12,8 @@ namespace Character
 
         [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private float _speed = 8.0f;
+        [SerializeField] private Transform _playerMesh;
+        [SerializeField] private float rotationSpeed = 5.0f;
 
         private Vector3 _movementInput;
         
@@ -27,6 +29,15 @@ namespace Character
         private void FixedUpdate()
         {
             _rigidbody.MovePosition(_rigidbody.position + _movementInput.normalized * _speed * Time.fixedDeltaTime);
+
+            if (_movementInput != Vector3.zero)
+            {
+                // Calculate the direction of movement
+                Quaternion targetRotation = Quaternion.LookRotation(_movementInput);
+
+                // Directly apply the rotation to _playerMesh
+                _playerMesh.rotation = Quaternion.Slerp(_playerMesh.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+            }
         }
 
         #endregion
